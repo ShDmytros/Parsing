@@ -10,16 +10,17 @@ from working_files import WorkingWithFiles
 
 
 class parsing(WorkingWithFiles):
-    def __init__(self, url):
+    def __init__(self, url) -> None:
         self.final_list = None
         self.position = None
         self.availabilities = None
         self.page = None
 
-        self.url = url
-        self.naked_url = "https://books.toscrape.com/catalogue/"
+        self.url: str = url
+        self.naked_url: str = "https://books.toscrape.com/catalogue/"
         self.headers = self.get_headers()
-        self.response = self.make_request()
+        self.response: Response = self.make_request()
+
         self.make_html(response=self.response)
         self.data_list(self.parse())
         self.make_json(data=self.final_list)
@@ -33,7 +34,7 @@ class parsing(WorkingWithFiles):
     def make_request(self) -> Response:
         return requests.get(url=self.url, headers=self.headers)
 
-    def parse(self):
+    def parse(self) -> list:
 
         self.final_list: list = []
         self.position: int = 0
@@ -80,5 +81,5 @@ class parsing(WorkingWithFiles):
                 break
         return self.final_list
 
-    def data_list(self, data):
+    def data_list(self, data) -> None:
         print(json.dumps(data, indent=2, ensure_ascii=False))
